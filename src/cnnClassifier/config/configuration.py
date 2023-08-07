@@ -46,11 +46,10 @@ class ConfigurationManager:
         prepare_base_model_config = PrepareBaseModelConfig(
             root_dir=Path(config.root_dir),
             base_model_path=Path(config.base_model_path),
+            base_model_source_path=Path(config.base_model_source_path),
             updated_base_model_path=Path(config.updated_base_model_path),
             params_image_size=self.params.IMAGE_SIZE,
             params_learning_rate=self.params.LEARNING_RATE,
-            params_include_top=self.params.INCLUDE_TOP,
-            params_weights=self.params.WEIGHTS,
             params_classes=self.params.CLASSES
         )
 
@@ -68,7 +67,7 @@ class ConfigurationManager:
         prepare_callback_config = PrepareCallbacksConfig(
             root_dir=Path(config.root_dir),
             tensorboard_root_log_dir=Path(config.tensorboard_root_log_dir),
-            checkpoint_model_filepath=Path(config.checkpoint_model_filepath)
+            checkpoint_model_filepath= config.checkpoint_model_filepath
         )
 
         return prepare_callback_config
