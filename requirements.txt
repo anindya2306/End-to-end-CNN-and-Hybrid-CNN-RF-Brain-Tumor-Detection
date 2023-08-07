@@ -3,6 +3,7 @@ pandas
 matplotlib
 tensorflow
 keras
+tqdm
 scikit-learn
 opencv-python
 seaborn
@@ -16,3 +17,5 @@ types-PyYAML
 scipy
 Flask
 Flask-Cors
+streamlit
+-e .
