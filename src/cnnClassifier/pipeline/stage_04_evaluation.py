@@ -16,6 +16,7 @@ class EvaluationPipeline:
         config = ConfigurationManager()
         val_config = config.get_validation_config()
         evaluation = Evaluation(val_config)
+        evaluation.get_files_df()
         evaluation.evaluation()
         evaluation.save_score()
 

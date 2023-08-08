@@ -22,6 +22,7 @@ class ModelTrainingPipeline:
         training_config = config.get_training_config()
         training = Training(config=training_config)
         training.get_base_model()
+        training.get_files_df()
         training.train_valid_generator()
         training.train(
             callback_list=callback_list

@@ -33,8 +33,8 @@ class PrepareBaseModel:
         feature_in = tf.keras.layers.Dropout(0.3)(model.output)
         feature_in = tf.keras.layers.BatchNormalization()(feature_in)
         prediction = tf.keras.layers.Dense(
-            units=classes,
-            activation="softmax"
+            units=1,
+            activation="sigmoid"
         )(feature_in)
 
         full_model = tf.keras.models.Model(
@@ -44,7 +44,7 @@ class PrepareBaseModel:
 
         full_model.compile(
             optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-            loss=tf.keras.losses.CategoricalCrossentropy(),
+            loss=tf.keras.losses.BinaryFocalCrossentropy(apply_class_balancing=True),
             metrics=["binary_accuracy", tf.keras.metrics.AUC()]
         )
 

@@ -1,4 +1,5 @@
 import tensorflow as tf
+import pandas as pd
 from pathlib import Path
 from cnnClassifier.entity.config_entity import EvaluationConfig
 from cnnClassifier.utils.common import save_json
@@ -10,11 +11,16 @@ class Evaluation:
         self.config = config
 
     
+    def get_files_df(self):
+        self.df = pd.read_csv(os.path.join(self.config.testing_data, "Brain Tumor.csv"))
+        self.df = self.df[['Image', 'Class']]
+        self.df['Image'] += ".jpg"
+
     def _valid_generator(self):
 
         datagenerator_kwargs = dict(
-            rescale = 1./255,
-            validation_split=0.99
+            rescale = 1./255.0,
+            validation_split=0.3
         )
 
         dataflow_kwargs = dict(
@@ -27,9 +33,13 @@ class Evaluation:
             **datagenerator_kwargs
         )
 
-        self.valid_generator = valid_datagenerator.flow_from_directory(
-            directory=self.config.testing_data,
+        self.valid_generator = valid_datagenerator.flow_from_dataframe(
+            dataframe=self.df,
+            directory=os.path.join(self.config.testing_data , "Brain Tumor/"),
+            x_col = "Image",
+            y_col = "Class",
             subset="validation",
+            class_mode='raw',
             shuffle=False,
             **dataflow_kwargs
         )
@@ -43,11 +53,14 @@ class Evaluation:
     def evaluation(self):
         self.model = self.load_model(self.config.path_of_model)
         self._valid_generator()
-        self.score = self.model.evaluate(self.valid_generator)
+        self.score = model.evaluate(self.valid_generator)
+        self.pred = model.predict(self.valid_generator)
 
     
     def save_score(self):
         scores = {"loss": self.score[0], "accuracy": self.score[1]}
         save_json(path=Path("scores.json"), data=scores)
+
+    
 
     
