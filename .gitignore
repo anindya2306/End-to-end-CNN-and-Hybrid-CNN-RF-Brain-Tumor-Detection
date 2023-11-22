@@ -162,3 +162,8 @@ artifacts/*
 BrainTumor.zip
 my_best_model.epoch60-Loss0.0802.hdf5
 Test_seggregated/*
+Model_23_11.hdf5
+Dockerfile
+dvc.*
+inputImage.jpg
+lgbm_classifier.pkl

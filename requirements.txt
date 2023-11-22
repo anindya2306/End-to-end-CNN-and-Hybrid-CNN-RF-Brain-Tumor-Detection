@@ -7,6 +7,7 @@ tqdm
 scikit-learn
 opencv-python
 seaborn
+lightgbm
 dvc
 python-box==6.0.2
 pyYAML
